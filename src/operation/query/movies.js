@@ -21,7 +21,7 @@ module.exports = {
         try {
 
             // Return To Controller
-            return await getSingleMovieController(db, user, isAuth);
+            return await getSingleMovieController(args.data, db, user, isAuth);
 
         } catch(error){
             if (error) return { message: `Something Went Wrong!!! Error: ${error}`, status: false };
