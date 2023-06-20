@@ -81,9 +81,19 @@ type GetSingleMovieOutput {
     status:Boolean
     data:Movie
 }
+
+input GetMovieListInput {
+    page:Int
+    limit:Int
+}
+
 type GetMovieListOutput {
     message:String
     status:Boolean
+    showing:Int
+    currentPage:Int
+    totalMovies:Int
+    totalPages:Int
     data:[Movie]
 }
 
@@ -102,7 +112,7 @@ extend type Mutation {
 }
 
 extend type Query {
-    getMovieList: GetMovieListOutput!
+    getMovieList(query: GetMovieListInput): GetMovieListOutput!
     getSingleMovie(query: GetSingleMovieInput): GetSingleMovieOutput!
 }
 

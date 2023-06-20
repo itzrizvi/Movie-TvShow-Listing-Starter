@@ -4,29 +4,22 @@ const { getMovieListController, getSingleMovieController } = require('../../cont
 // MOVIE QUERIES
 module.exports = {
     // GET MOVIE LIST
-    getMovieList: async (root, args, { db, user, isAuth }, info) => {
+    getMovieList: async (root, args, { db }, info) => {
         try {
-
             // Return To Controller
-            return await getMovieListController(db, user, isAuth);
-
+            return await getMovieListController(args.query, db);
         } catch(error){
             if (error) return { message: `Something Went Wrong!!! Error: ${error}`, status: false };
         }
-        // Return If No Auth
-        // if (!user || !isAuth) return { message: "Not Authorized", isAuth: false, data: [], status: false };
     },
     // GET SINGLE MOVIE
-    getSingleMovie: async (root, args, { db, user, isAuth }, info) => {
+    getSingleMovie: async (root, args, { db }, info) => {
         try {
-
             // Return To Controller
-            return await getSingleMovieController(args.data, db, user, isAuth);
+            return await getSingleMovieController(args.query, db);
 
         } catch(error){
             if (error) return { message: `Something Went Wrong!!! Error: ${error}`, status: false };
         }
-        // Return If No Auth
-        // if (!user || !isAuth) return { message: "Not Authorized", isAuth: false, data: [], status: false };
-    },
+    }
 }
