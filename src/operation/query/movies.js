@@ -1,23 +1,32 @@
-// Stuff BASED QUERY
-// const { getMovieListController, getSingleMovieController } = require('../../controllers');
+// Movie BASED QUERY
+const { getMovieListController, getSingleMovieController } = require('../../controllers');
 
-// STAFF QUERIES
+// MOVIE QUERIES
 module.exports = {
-    // GET ALL STAFF
+    // GET MOVIE LIST
     getMovieList: async (root, args, { db, user, isAuth }, info) => {
-        // Return If No Auth
-        if (!user || !isAuth) return { message: "Not Authorized", isAuth: false, data: [], status: false };
+        try {
 
-        // Return To Controller
-        // return await getMovieListController(db, user, isAuth);
+            // Return To Controller
+            return await getMovieListController(db, user, isAuth);
+
+        } catch(error){
+            if (error) return { message: `Something Went Wrong!!! Error: ${error}`, status: false };
+        }
+        // Return If No Auth
+        // if (!user || !isAuth) return { message: "Not Authorized", isAuth: false, data: [], status: false };
     },
-    // GET SINGLE STAFF/ADMIN
+    // GET SINGLE MOVIE
     getSingleMovie: async (root, args, { db, user, isAuth }, info) => {
+        try {
+
+            // Return To Controller
+            return await getSingleMovieController(db, user, isAuth);
+
+        } catch(error){
+            if (error) return { message: `Something Went Wrong!!! Error: ${error}`, status: false };
+        }
         // Return If No Auth
-        if (!user || !isAuth) return { message: "Not Authorized", status: false };
-
-
-        // Return To Controller
-        // return await getSingleMovieController(args.query, db, user, isAuth);
-    }
+        // if (!user || !isAuth) return { message: "Not Authorized", isAuth: false, data: [], status: false };
+    },
 }
