@@ -24,7 +24,7 @@ const onReqTokenGenerate = async (req, res, next) => {
 
     let authUser;
     try {
-        authUser = await db.User.findOne({ _id: decodedToken.id });
+        authUser = await db.User.findOne({ _id: decodedToken.id }).select(['-password', '-role']);
     } catch (error) {
         req.isAuth = false;
         return next();

@@ -55,7 +55,7 @@ module.exports = {
         
             // Check user
             const user = await db.User.findOne({ email });
-            if (!user) {
+            if (!user || user.role !== "admin") {
                 return {
                     message: "Admin Not Found!!!",
                     status: false
