@@ -3,11 +3,11 @@ const { gql } = require("apollo-server-express");
 
 module.exports = gql`
 
-# User Based Input and Queries #######################################################
+# Admin Based Input and Queries #######################################################
 ######################################################################################
 
 
-type User {
+type Admin {
     id:String
     first_name:String
     last_name:String
@@ -25,14 +25,14 @@ type AuthPayload {
     message:String
 }
 
-input UserInput {
+input AdminInput {
     first_name:String!
     last_name:String
     email:String!
     password:String!
 }
 
-type UserAuthOutput {
+type AdminAuthOutput {
     message:String
     status:Boolean
     data:AuthPayload
@@ -42,8 +42,8 @@ type UserAuthOutput {
 #######################################################################
 
 extend type Mutation {
-    userSignUp(data: UserInput): UserAuthOutput!
-    userSignIn(email: String!, password: String!): UserAuthOutput!
+    adminSignUp(data: AdminInput): AdminAuthOutput!
+    adminSignIn(email: String!, password: String!): AdminAuthOutput!
 }
 
 

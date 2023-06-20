@@ -18,11 +18,12 @@ module.exports = {
                 first_name,
                 last_name,
                 email,
+                role: "user",
                 password: hashedPassword,
             });
             // Generate Auth Token
             const authToken = jwt.sign(
-                { id: user._id, email: user.email },
+                { id: user._id, email: user.email, role: user.role },
                 process.env.JWT_SECRET,
                 { expiresIn: "1y" }
             );
@@ -34,11 +35,12 @@ module.exports = {
                 message: "Sign Up successful",
                 status: true,
                 data: {
-                authToken,
-                id: user._id,
-                first_name: user.first_name,
-                last_name: user.last_name,
-                email: user.email,
+                    authToken,
+                    id: user._id,
+                    first_name: user.first_name,
+                    last_name: user.last_name,
+                    email: user.email,
+                    role: user.role,
                 },
             };
         } catch (error) {
@@ -54,8 +56,8 @@ module.exports = {
             const user = await db.User.findOne({ email });
             if (!user) {
                 return {
-                message: "User Not Found!!!",
-                status: false
+                    message: "User Not Found!!!",
+                    status: false
                 };
             }
         
@@ -70,7 +72,7 @@ module.exports = {
         
             // Generate JWT
             const authToken = jwt.sign(
-                { id: user._id, email: user.email },
+                { id: user._id, email: user.email, role: user.role },
                 process.env.JWT_SECRET,
                 { expiresIn: '4h' }
             );
@@ -82,11 +84,12 @@ module.exports = {
                 message: "Sign In successful",
                 status: true,
                 data: {
-                authToken,
-                id: user._id,
-                first_name: user.first_name,
-                last_name: user.last_name,
-                email: user.email
+                    authToken,
+                    id: user._id,
+                    first_name: user.first_name,
+                    last_name: user.last_name,
+                    email: user.email,
+                    role: user.role
                 }
             };
         } catch (error) {

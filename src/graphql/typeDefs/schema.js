@@ -1,6 +1,7 @@
 const { gql } = require('apollo-server-express');
 // All Type Defs
 const userTypeDefs = require("./userTypes");
+const adminTypeDefs = require("./adminTypes");
 const movieTypeDefs = require("./movieTypes");
 const tvShowTypeDefs = require("./tvShowTypes");
 
@@ -45,6 +46,7 @@ type Query{
 module.exports = [
     typeDefs,
     userTypeDefs,
+    adminTypeDefs,
     movieTypeDefs,
     tvShowTypeDefs,
 ]
