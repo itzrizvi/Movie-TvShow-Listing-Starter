@@ -22,8 +22,6 @@ const onReqTokenGenerate = async (req, res, next) => {
         return next();
     }
 
-    console.log(decodedToken);
-
     let authUser;
     try {
         authUser = await db.User.findOne({ _id: decodedToken.id });
