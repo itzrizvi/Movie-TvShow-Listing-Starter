@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
     // SIGN UP
-    userSignUp: async (req, db) => {
+    userSignUp: async (req, db, res) => {
         try {
             const { first_name, last_name, email, password } = req;
 
@@ -20,12 +20,15 @@ module.exports = {
                 email,
                 password: hashedPassword,
             });
-        
+            // Generate Auth Token
             const authToken = jwt.sign(
                 { id: user._id, email: user.email },
                 process.env.JWT_SECRET,
                 { expiresIn: "1y" }
             );
+
+            // Set the token as a cookie
+            res.cookie('token', authToken, { httpOnly: true });
         
             return {
                 message: "Sign Up successful",
@@ -38,11 +41,11 @@ module.exports = {
                 email: user.email,
                 },
             };
-            } catch (error) {
+        } catch (error) {
             if (error) return { message: `Something Went Wrong!!! Error: ${error}`, status: false };
-            }
+        }
     },
-    userSignIn: async (req, db) => {
+    userSignIn: async (req, db, res) => {
         try {
             // Data from request
             const { email, password } = req;
@@ -71,6 +74,9 @@ module.exports = {
                 process.env.JWT_SECRET,
                 { expiresIn: '4h' }
             );
+
+            // Set the token as a cookie
+            res.cookie('token', authToken, { httpOnly: true });
         
             return {
                 message: "Sign In successful",

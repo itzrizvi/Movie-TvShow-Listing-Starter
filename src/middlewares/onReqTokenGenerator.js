@@ -2,29 +2,29 @@ const { verify } = require("jsonwebtoken");
 const { db } = require("../db");
 
 const onReqTokenGenerate = async (req, res, next) => {
-    const authToken = req.get('Authorization') || '';
+    const authToken = req.cookies.token || '';
 
     if (!authToken) {
         req.isAuth = false;
         return next();
     }
 
-    let decodeToken;
+    let decodedToken;
     try {
-        decodeToken = verify(authToken, process.env.JWT_SECRET)
+        decodedToken = verify(authToken, process.env.JWT_SECRET);
     } catch (error) {
         req.isAuth = false;
         return next();
     }
 
-    if (!decodeToken) {
+    if (!decodedToken) {
         req.isAuth = false;
         return next();
     }
 
     let authUser;
     try {
-        authUser = await db.User.findOne({ _id: decodeToken.id });
+        authUser = await db.User.findOne({ _id: decodedToken.id });
     } catch (error) {
         req.isAuth = false;
         return next();
@@ -39,6 +39,9 @@ const onReqTokenGenerate = async (req, res, next) => {
     req.isAuth = true;
 
     return next();
-}
+};
+
+module.exports = onReqTokenGenerate;
+
 
 module.exports = onReqTokenGenerate;

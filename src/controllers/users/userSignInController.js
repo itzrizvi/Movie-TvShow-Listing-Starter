@@ -3,10 +3,10 @@ const { singleResponse } = require("../../utils/response");
 
 
 // Controller
-module.exports = async (req, db) => {
+module.exports = async (req, db, res) => {
 
     try {
-        const data = await userSignIn(req, db);
+        const data = await userSignIn(req, db, res);
         return singleResponse(data);
 
     } catch (error) {

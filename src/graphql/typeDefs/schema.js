@@ -19,7 +19,6 @@ scalar Upload
 type CommonOutput {
     message:String
     status:Boolean
-    tenant_id:String
 }
 
 type TokenOutput{

@@ -2,14 +2,14 @@ const { userSignUp } = require("../../helpers/userHelper");
 const { singleResponse } = require("../../utils/response");
 
 // Sign Up Controller Export
-module.exports = async (req, db) => {
+module.exports = async (req, db, res) => {
     try {
         // Check if Email Is Already Taken or Not
         const checkEmail = await db.User.findOne({ email: req.email });
 
         // If Email does not exist, create User
         if (!checkEmail) {
-            const data = await userSignUp(req, db);
+            const data = await userSignUp(req, db, res);
             return singleResponse(data);
         } else {
             // Email is already taken

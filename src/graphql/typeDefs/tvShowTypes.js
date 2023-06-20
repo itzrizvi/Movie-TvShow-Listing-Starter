@@ -7,7 +7,7 @@ module.exports = gql`
 ##############################################################################
 
 type TVShow {
-    id: Int
+    id: String
     name:String
 }
 
@@ -27,12 +27,12 @@ type CreateTVShowOutput {
 }
 
 type SingleTVShow {
-    id: Int
+    id: String
     name:String
 }
 
 input GetSingleTVShowInput {
-    id:Int
+    id:String
 }
 
 type GetSingleTVShowOutput {

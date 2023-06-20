@@ -7,7 +7,7 @@ module.exports = gql`
 ##############################################################################
 
 type Movie {
-    id: Int
+    id: String
     name:String
 }
 
@@ -27,12 +27,12 @@ type CreateMovieOutput {
 }
 
 type SingleMovie {
-    id: Int
+    id:String
     name:String
 }
 
 input GetSingleMovieInput {
-    id:Int
+    id:String
 }
 
 type GetSingleMovieOutput {
