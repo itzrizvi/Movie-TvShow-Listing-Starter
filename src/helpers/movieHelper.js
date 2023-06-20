@@ -122,7 +122,7 @@ module.exports = {
                 currentPage: pageNumber,
                 totalMovies: totalCount,
                 totalPages,
-                data:movies
+                data: movies
             };
             
 
