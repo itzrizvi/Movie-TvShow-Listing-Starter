@@ -9,7 +9,7 @@ module.exports = async (req, db, user, isAuth) => {
     // Check Permission
     const checkPermissions = await checkPermission(user, isAuth);
     if (!checkPermissions.success) {
-        return { message: "You dont have access to this route, please contact support!!!", status: false };
+        return { message: "You dont have access to this action!!!", status: false };
     }
 
     // Return If No Auth

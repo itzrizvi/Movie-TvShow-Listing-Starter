@@ -1,23 +1,25 @@
-// Stuff BASED QUERY
-// const { getTvShowListController, getSingleTvShowController } = require('../../controllers');
+// TV Shows BASED QUERY
+const { getTvShowListController, getSingleTvShowController } = require('../../controllers');
 
-// STAFF QUERIES
+// TV SHOW QUERIES
 module.exports = {
-    // GET ALL STAFF
-    getTvShowList: async (root, args, { db, user, isAuth }, info) => {
-        // Return If No Auth
-        if (!user || !isAuth) return { message: "Not Authorized", isAuth: false, data: [], status: false };
-
-        // Return To Controller
-        // return await getTvShowListController(db, user, isAuth);
+    // GET TV SHOW LIST
+    getTvShowList: async (root, args, { db }, info) => {
+        try {
+            // Return To Controller
+            return await getTvShowListController(args.query, db);
+        } catch(error){
+            if (error) return { message: `Something Went Wrong!!! Error: ${error}`, status: false };
+        }
     },
-    // GET SINGLE STAFF/ADMIN
-    getSingleTvShow: async (root, args, { db, user, isAuth }, info) => {
-        // Return If No Auth
-        if (!user || !isAuth) return { message: "Not Authorized", status: false };
+    // GET SINGLE TV SHOW
+    getSingleTvShow: async (root, args, { db }, info) => {
+        try {
+            // Return To Controller
+            return await getSingleTvShowController(args.query, db);
 
-
-        // Return To Controller
-        // return await getSingleTvShowController(args.query, db, user, isAuth);
+        } catch(error){
+            if (error) return { message: `Something Went Wrong!!! Error: ${error}`, status: false };
+        }
     }
 }

@@ -1,36 +1,36 @@
 // All Requires
-const { createMovieController,
-    updateMovieController,
-    deleteMovieController } = require('../../controllers');
+const { createTVShowController,
+    updateTVShowController,
+    deleteTVShowController } = require('../../controllers');
 
 
 module.exports = {
-    // CREATE MOVIE MUTATION
-    createMovie: async (root, args, { db, user, isAuth }, info) => {
+    // CREATE TV SHOW MUTATION
+    createTVShow: async (root, args, { db, user, isAuth }, info) => {
         try {
             if (!isAuth) return { message:"Not Authorized", status:false};
-            return await createMovieController(args.data, db, user, isAuth );
+            return await createTVShowController(args.data, db, user, isAuth );
 
         } catch (error) {
             if (error) return { message: `Something Went Wrong!!! Error: ${error}`, status: false };
         }
     },
-    // UPDATE MOVIE MUTATION
-    updateMovie: async (root, args, { db, user, isAuth  }, info) => {
+    // UPDATE TV SHOW MUTATION
+    updateTVShow: async (root, args, { db, user, isAuth  }, info) => {
         try {
             if (!isAuth) return { message:"Not Authorized", status:false};
-            return await updateMovieController(args.data, db, user, isAuth );
+            return await updateTVShowController(args.data, db, user, isAuth );
 
         } catch (error) {
             if (error) return { message: `Something Went Wrong!!! Error: ${error}`, status: false };
         }
 
     },
-    // DELETE MOVIE MUTATION
-    deleteMovie: async (root, args, { db, user, isAuth  }, info) => {
+    // DELETE TV SHOW MUTATION
+    deleteTVShow: async (root, args, { db, user, isAuth  }, info) => {
         try {
             if (!isAuth) return { message:"Not Authorized", status:false};
-            return await deleteMovieController(args.data, db, user, isAuth);
+            return await deleteTVShowController(args.data, db, user, isAuth);
 
         } catch (error) {
             if (error) return { message: `Something Went Wrong!!! Error: ${error}`, status: false };

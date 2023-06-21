@@ -1,9 +1,9 @@
 // All Requires
-const { updateMovie } = require("../../helpers/movieHelper");
+const { createTVShow } = require("../../helpers/tvShowHelper");
 const { checkPermission } = require("../../utils/permissionChecker");
 const { singleResponse } = require("../../utils/response");
 
-// Update Movie Controller
+// Create NEW TV SHOW Controller
 module.exports = async (req, db, user, isAuth) => {
 
     // Check Permission
@@ -16,7 +16,7 @@ module.exports = async (req, db, user, isAuth) => {
     if (!user || !isAuth) return { message: "Not Authorized", status: false };
 
     // Helper
-    const data = await updateMovie(req, db, user);
+    const data = await createTVShow(req, db, user);
 
     // Return Data
     return singleResponse(data);
