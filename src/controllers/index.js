@@ -3,4 +3,5 @@ module.exports = {
     ...require('./admins'),
     ...require('./movies'),
     ...require('./tvShows'),
+    ...require('./global'),
 }

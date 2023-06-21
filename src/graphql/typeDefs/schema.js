@@ -4,6 +4,7 @@ const userTypeDefs = require("./userTypes");
 const adminTypeDefs = require("./adminTypes");
 const movieTypeDefs = require("./movieTypes");
 const tvShowTypeDefs = require("./tvShowTypes");
+const globalQueryTypes = require("./globalQueryTypes");
 
 
 
@@ -49,4 +50,5 @@ module.exports = [
     adminTypeDefs,
     movieTypeDefs,
     tvShowTypeDefs,
+    globalQueryTypes
 ]
