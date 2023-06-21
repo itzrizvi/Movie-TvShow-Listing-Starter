@@ -1,5 +1,7 @@
 // All Requires
 const { default: slugify } = require("slugify");
+const { slugifyRecursive } = require("../utils/slugifyRecursive");
+const { mergeEpisodes } = require("../utils/tvShowUtils");
 
 
 module.exports = {
@@ -7,7 +9,8 @@ module.exports = {
     createTVShow: async (req, db, user) => {
         try {
             if(!user) return { message:"Not Authorized", status:false }
-            const { title } = req;
+
+            const { title, seasons } = req;
             // Slug
             const slug = slugify(title, {
                 replacement: '-',
@@ -16,63 +19,100 @@ module.exports = {
                 strict: true,
                 trim: true
             });
-            // Check If This Movie Already Exists
-            const checkExisitng = await db.Movie.countDocuments({ slug: slug }).exec();
-            if(checkExisitng > 0) return {message:"This Movie Already Exists!!!", status:false}
+            // Slugify Each Seasons Episod Titles in a Recursive way
+            slugifyRecursive(seasons);
+
+            // Check If This TV Show Already Exists
+            const checkExisitng = await db.TVShow.countDocuments({ slug: slug }).exec();
+            if(checkExisitng > 0) return { message:"This TV Show Already Exists!!!", status:false };
+
             // Data To Insert
-            const newMoviePayload = {
+            const newTvShowPayload = {
                 ...req,
                 slug
             }
-
-            // Create New Movie
-            const createNewMovie = await db.Movie.create(newMoviePayload);
-            if(createNewMovie) return { message:"New Movie Created Successfully!!!", status:true }
+            // Create New TV SHOW
+            const createNewTvShow = await db.TVShow.create(newTvShowPayload);
+            if(createNewTvShow) return { message:"New TV Show Created Successfully!!!", status:true }
 
         } catch (error) {
             if (error) return { message: `Something Went Wrong!!! Error: ${error}`, status: false };
         }
     },
-    // UPDATE MOVIE HELPER
+    // UPDATE TV Show HELPER
     updateTVShow: async (req, db, user) => {
         try {
 
             if(!user) return { message:"Not Authorized", status:false };
-
+            const { id, title, seasons } = req;
             let slug;
-            if(req.title){
+            if(title){
                 // Slug
-                slug = slugify(req.title, {
+                slug = slugify(title, {
                     replacement: '-',
                     remove: /[*+~.()'"!:@]/g,
                     lower: true,
                     strict: true,
                     trim: true
                 });
-            }
-            
-            // Check If This Movie Already Exists
-            const checkExisitng = await db.Movie.countDocuments({ _id:{ $ne: req.id }, slug: slug }).exec();
-            if(checkExisitng > 0) return {message:"This Movie Already Exists!!!", status:false}
 
-            // Data To Insert
-            const updatedMoviePayload = {
+                // Check If The Updated TV Show Already Exists
+                const checkExisitng = await db.TVShow.countDocuments({ _id:{ $ne: id }, slug: slug }).exec();
+                if(checkExisitng > 0) return {message:"This TV Show Already Exists!!!", status:false}
+            }
+            const existingTvShow = await db.TVShow.findById(id).select("seasons");
+            let updatedSeasons = existingTvShow.seasons;
+            if (seasons) {
+                // Slugify Each Seasons Episod Titles in a Recursive way
+                slugifyRecursive(seasons);
+                 // Iterate over the new seasons
+                for (const newSeason of seasons) {
+                    const { season: newSeasonNumber, episodes: newEpisodes } = newSeason;
+
+                    // Find the matching existing season
+                    const existingSeasonIndex = updatedSeasons.findIndex(
+                    (season) => season.season === newSeasonNumber
+                    );
+
+                    if (existingSeasonIndex > -1) {
+                    // Merge the episodes of the existing season with the new episodes
+                    updatedSeasons[existingSeasonIndex].episodes = mergeEpisodes(
+                        updatedSeasons[existingSeasonIndex].episodes,
+                        newEpisodes
+                    );
+                    } else {
+                    // If the season doesn't exist, add it to the updated seasons array
+                    updatedSeasons.push(newSeason);
+                    }
+                }
+            }
+
+              // Create the updated TV show payload
+            const updatedTvShowPayload = {
                 ...req,
-                slug
+                slug,
+                seasons: updatedSeasons,
+            };
+
+            // Update the TV show
+            const options = { new: true, upsert: true, runValidators: true };
+            const updatedTvShow = await db.TVShow.findOneAndUpdate(
+                { _id: id },
+                updatedTvShowPayload,
+                options
+            );
+            if (updatedTvShow) {
+                return { message: "TV show updated successfully", status: true };
             }
 
-            // Update Movie
-            const options = { new: true, upsert: true, runValidators: true };
-            const query = { _id : req.id };
-            const updatedMovie = await db.Movie.findOneAndUpdate(query, updatedMoviePayload, options);
-            if(updatedMovie) return { message:"Movie Updated Successfully!!!", status:true }
+            return { message: "TV show update failed", status: false };
             
 
         } catch (error) {
             if (error) return { message: `Something Went Wrong!!! Error: ${error}`, status: false };
         }
     },
-    // DELETE MOVIE HELPER
+    // DELETE TV SHOW HELPER
     deleteTVShow: async (req, db, user) => {
         try {
 
@@ -80,20 +120,20 @@ module.exports = {
 
             const { id } = req;
             
-            // Check If This Movie Exists
-            const checkExisitng = await db.Movie.countDocuments({ _id: id }).exec();
+            // Check If This TV SHOW Exists
+            const checkExisitng = await db.TVShow.countDocuments({ _id: id }).exec();
             if(checkExisitng <= 0) return { message:"Non Existing Request!!!", status:false };
 
-            // Find and delete the movie
-            const deletedMovie = await db.Movie.findOneAndDelete({ _id: id });
-            if(deletedMovie) return { message:"Movie Deleted Successfully!!!", status:true }
+            // Find and delete the TV SHOW
+            const deletedTvShow = await db.TVShow.findOneAndDelete({ _id: id });
+            if(deletedTvShow) return { message:"Tv Show Deleted Successfully!!!", status:true }
             
 
         } catch (error) {
             if (error) return { message: `Something Went Wrong!!! Error: ${error}`, status: false };
         }
     },
-    // GET MOVIE LIST HELPER
+    // GET TV SHOW LIST HELPER
     getTvShowList: async (query, db) => {
         try {
         
@@ -103,26 +143,26 @@ module.exports = {
             // Calculate skip value based on page number and limit
             const skip = (pageNumber - 1) * limit;
 
-            // Query movies with pagination
-            const [movies, totalCount] = await Promise.all([
-                db.Movie.find({})
+            // Query Tv Show with pagination
+            const [tvShows, totalCount] = await Promise.all([
+                db.TVShow.find({})
                 .skip(skip)
                 .limit(limit),
-                db.Movie.countDocuments({}),
+                db.TVShow.countDocuments({}),
             ]);
 
-            if (movies.length === 0) return { message: "No movies found", status: false };
-            const totalShowingCount = movies.length;
+            if (tvShows.length === 0) return { message: "No TV Show found", status: false };
+            const totalShowingCount = tvShows.length;
             const totalPages = Math.ceil(totalCount / limit);
 
             return {
-                message: "Movies retrieved successfully!!!",
+                message: "TV Shows retrieved successfully!!!",
                 status: true,
                 showing: totalShowingCount,
                 currentPage: pageNumber,
-                totalMovies: totalCount,
+                totalTvShows: totalCount,
                 totalPages,
-                data: movies
+                data: tvShows
             };
             
 
@@ -130,22 +170,22 @@ module.exports = {
             if (error) return { message: `Something Went Wrong!!! Error: ${error}`, status: false };
         }
     },
-    // GET SINGLE MOVIE HELPER
+    // GET SINGLE TV SHOW HELPER
     getSingleTvShow: async (query, db) => {
         try {
             const { id } = query;
-            // Find the movie by its ID
-            const movie = await db.Movie.findById(id);
-            if (!movie) return { message: "Movie not found", status: false };
+            // Find the tv show by its ID
+            const tvShow = await db.TVShow.findById(id);
+            if (!tvShow) return { message: "TV Show not found", status: false };
 
             return {
-                message: "Movie retrieved successfully",
+                message: "Tv Show retrieved successfully",
                 status: true,
-                data: movie,
+                data: tvShow,
             };
 
         } catch (error) {
             if (error) return { message: `Something Went Wrong!!! Error: ${error}`, status: false };
         }
-    },
+    }
 }

@@ -117,7 +117,7 @@ type GetTVShowListOutput {
     status:Boolean
     showing:Int
     currentPage:Int
-    totalMovies:Int
+    totalTvShows:Int
     totalPages:Int
     data:[TVShow]
 }

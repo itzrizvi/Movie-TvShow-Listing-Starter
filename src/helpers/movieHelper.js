@@ -49,18 +49,17 @@ module.exports = {
                     strict: true,
                     trim: true
                 });
+
+                // Check If This Movie Already Exists
+                const checkExisitng = await db.Movie.countDocuments({ _id:{ $ne: req.id }, slug: slug }).exec();
+                if(checkExisitng > 0) return {message:"This Movie Already Exists!!!", status:false}
             }
-            
-            // Check If This Movie Already Exists
-            const checkExisitng = await db.Movie.countDocuments({ _id:{ $ne: req.id }, slug: slug }).exec();
-            if(checkExisitng > 0) return {message:"This Movie Already Exists!!!", status:false}
 
             // Data To Insert
             const updatedMoviePayload = {
                 ...req,
                 slug
             }
-
             // Update Movie
             const options = { new: true, upsert: true, runValidators: true };
             const query = { _id : req.id };
