@@ -5,7 +5,8 @@ module.exports = {
     // GET LIST HELPER
     getItemList: async (query, db) => {
         try {
-            const { page = 1, perPage = 10 } = query;
+            const page = query?.page ? parseInt(query.page) : 1;
+            const perPage = query?.perPage ? parseInt(query.perPage) : 2;
 
             // Calculate skip value based on page and perPage
             const skip = (page - 1) * perPage;
