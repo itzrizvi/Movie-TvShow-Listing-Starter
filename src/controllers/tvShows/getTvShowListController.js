@@ -2,7 +2,7 @@
 const { getTvShowList } = require("../../helpers/tvShowHelper");
 const { singleResponse } = require("../../utils/response");
 
-// GET Movie List Controller
+// GET TV SHOW List Controller
 module.exports = async (query, db) => {
     // Helper
     const data = await getTvShowList(query, db);
