@@ -57,8 +57,7 @@ const movieSchema = new mongoose.Schema(
             required: true
         }],
         sponsors: [{ 
-            type: String,
-            required: true
+            type: String
         }],
         writers: [{ 
             type: String,

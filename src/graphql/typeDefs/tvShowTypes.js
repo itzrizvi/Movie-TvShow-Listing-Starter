@@ -6,30 +6,96 @@ module.exports = gql`
 # TV SHOW Input and Queries ###############################################
 ##############################################################################
 
-type TVShow {
-    id: String
-    name:String
+type Episode {
+    episode: String
+    title: String
+    slug: String
+    runtime: String
 }
 
-type TVShowOutput {
-    message: String
-    status:Boolean
-    data: [TVShow]
+type Season {
+    season: String
+    releaseDate: String
+    totalRuntime: String
+    episodes: [Episode]
+}
+
+input EpisodeInput {
+    episode: String!
+    title: String!
+    runtime: String!
+}
+
+input SeasonInput {
+    season: String!
+    releaseDate: String!
+    totalRuntime: String!
+    episodes: [EpisodeInput!]
+}
+
+type TVShow {
+    id: String
+    title: String
+    slug: String
+    seasons:[Season]
+    actors:[String]
+    actresses:[String]
+    producers:[String]
+    genres:[String]
+    directors:[String]
+    productionTeam:[String]
+    cameraAndItTeam:[String]
+    visualEffectsTeam:[String]
+    artTeam:[String]
+    sponsors:[String]
+    writers:[String]
+    musicTeam:[String]
+    costumeDepartment:[String]
+    imdbRating:String
+    origin:String
 }
 
 input CreateTVShowInput {
-    name:String!
+    title: String!
+    seasons:[SeasonInput!]
+    actors:[String!]
+    actresses:[String!]
+    producers:[String!]
+    genres:[String!]
+    directors:[String!]
+    productionTeam:[String!]
+    cameraAndItTeam:[String!]
+    visualEffectsTeam:[String]
+    artTeam:[String]
+    sponsors:[String]
+    writers:[String!]
+    musicTeam:[String!]
+    costumeDepartment:[String!]
+    imdbRating:String!
+    origin:String
 }
 
-type CreateTVShowOutput {
-    message:String
-    status:Boolean
+input UpdateTVShowInput {
+    id: String!
+    title: String
+    seasons:[SeasonInput]
+    actors:[String]
+    actresses:[String]
+    producers:[String]
+    genres:[String]
+    directors:[String]
+    productionTeam:[String]
+    cameraAndItTeam:[String]
+    visualEffectsTeam:[String]
+    artTeam:[String]
+    sponsors:[String]
+    writers:[String]
+    musicTeam:[String]
+    costumeDepartment:[String]
+    imdbRating:String
+    origin:String
 }
 
-type SingleTVShow {
-    id: String
-    name:String
-}
 
 input GetSingleTVShowInput {
     id:String
@@ -38,19 +104,41 @@ input GetSingleTVShowInput {
 type GetSingleTVShowOutput {
     message:String
     status:Boolean
-    data:SingleTVShow
+    data: TVShow
 }
+
+input GetTVShowListInput {
+    page:Int
+    limit:Int
+}
+
+type GetTVShowListOutput {
+    message:String
+    status:Boolean
+    showing:Int
+    currentPage:Int
+    totalMovies:Int
+    totalPages:Int
+    data:[TVShow]
+}
+
+input DeleteTVShowInput {
+    id:String!
+}
+
 
 
 # Extended QUERIES AND MUTATIONS ######################################
 #######################################################################
 
 extend type Mutation {
-    createTVShow(data: CreateTVShowInput): CreateTVShowOutput!
+    createTVShow(data: CreateTVShowInput): CommonOutput!
+    updateTVShow(data: UpdateTVShowInput): CommonOutput!
+    deleteTVShow(data: DeleteTVShowInput):CommonOutput!
 }
 
 extend type Query {
-    getTvShowList: TVShowOutput!
+    getTvShowList(query: GetTVShowListInput): GetTVShowListOutput!
     getSingleTvShow(query: GetSingleTVShowInput): GetSingleTVShowOutput!
 }
 
