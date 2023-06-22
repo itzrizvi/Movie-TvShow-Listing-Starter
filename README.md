@@ -116,7 +116,7 @@ This API provides two main functionalities: retrieving a list of items and retri
 
 ### Output:
 
-### The output of the createMovie mutation is of type `CommonOutput`.
+#### The output of the createMovie mutation is of type `CommonOutput`.
 
 #### The CommonOutput type has the following fields:
 
