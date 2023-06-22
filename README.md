@@ -77,7 +77,158 @@ This API provides two main functionalities: retrieving a list of items and retri
 - `movie` (Movie object): The retrieved movie, if found.
 - `tvShow` (TVShow object): The retrieved TV show, if found.
 
-### How the POST API Works:
+### Examples of GET Queries
+
+#### GET LIST
+
+```
+{
+    "query":{
+       "perPage":2,
+       "page":1
+    }
+}
+```
+
+```
+query getItemList($query:GetItemListInput){
+  getItemList(query:$query){
+    message
+    status
+    movies {
+        id
+        title
+        slug
+        releaseDate
+        runtime
+        actors
+        actresses
+        producers
+        genres
+        directors
+        productionTeam
+        cameraAndItTeam
+        visualEffectsTeam
+        artTeam
+        writers
+        musicTeam
+        locationDepartment
+        costumeDepartment
+        imdbRating
+        origin
+    }
+    tvShows {
+        id
+        title
+        slug
+        seasons {
+            season
+            releaseDate
+            totalRuntime
+            episodes {
+                episode
+                title
+                slug
+                runtime
+            }
+        }
+        actors
+        actresses
+        producers
+        genres
+        directors
+        productionTeam
+        cameraAndItTeam
+        visualEffectsTeam
+        artTeam
+        writers
+        musicTeam
+        costumeDepartment
+        imdbRating
+        origin
+    }
+    pagination {
+        page
+        perPage
+        totalItems
+        totalPages
+    }
+  }
+}
+```
+
+#### GET Single
+
+```
+{
+    "query":{
+       "id":"6492a96a9facc9995281d9a7"
+    }
+}
+```
+
+```
+query getSingleItem($query:GetSingleItemInput){
+  getSingleItem(query:$query){
+    message
+    status
+    movie {
+        id
+        title
+        slug
+        releaseDate
+        runtime
+        actors
+        actresses
+        producers
+        genres
+        directors
+        productionTeam
+        cameraAndItTeam
+        visualEffectsTeam
+        artTeam
+        writers
+        musicTeam
+        locationDepartment
+        costumeDepartment
+        imdbRating
+        origin
+    }
+    tvShow {
+        id
+        title
+        slug
+        seasons {
+            season
+            releaseDate
+            totalRuntime
+            episodes {
+                episode
+                title
+                slug
+                runtime
+            }
+        }
+        actors
+        actresses
+        producers
+        genres
+        directors
+        productionTeam
+        cameraAndItTeam
+        visualEffectsTeam
+        artTeam
+        writers
+        musicTeam
+        costumeDepartment
+        imdbRating
+        origin
+    }
+  }
+}
+```
+
+### How the Create Movie POST API Works:
 
 - The API provides a mutation called `createMovie`.
 - This mutation is used to create a new movie.
@@ -122,6 +273,48 @@ This API provides two main functionalities: retrieving a list of items and retri
 
 - `message` (String): A message indicating the status of the operation.
 - `status` (Boolean): A value indicating the success or failure of the operation.
+
+### How the Create TV Show POST API Works:
+
+#### Description:
+
+- The createTVShow mutation allows an authorized user to create a new TV show by providing the necessary information.
+- This mutation requires authentication to ensure only authorized users can create TV shows.
+
+### Mutation Parameters and Types:
+
+- `data` (Object of type CreateTVShowInput): Contains the information required to create a new TV show.
+- `title` (String!): The title of the TV show.
+- `seasons` ([SeasonInput!]!): An array of season objects containing information about each season.
+- `actors` ([String!]): An array of actor names involved in the TV show.
+- `actresses` ([String!]): An array of actress names involved in the TV show.
+- `producers` ([String!]): An array of producer names involved in the TV show.
+- `genres` ([String!]): An array of genres associated with the TV show.
+- `directors` ([String!]): An array of director names involved in the TV show.
+- `productionTeam` ([String!]): An array of names of the production team members.
+- `cameraAndItTeam` ([String!]): An array of names of the camera and IT team members.
+- `visualEffectsTeam` ([String]): An array of names of the visual effects team members.
+- `artTeam` ([String]): An array of names of the art team members.
+- `sponsors` ([String]): An array of names of the sponsors associated with the TV show.
+- `writers` ([String!]): An array of writer names involved in the TV show.
+- `musicTeam` ([String!]): An array of names of the music team members.
+- `costumeDepartment` ([String!]): An array of names of the costume department members.
+- `imdbRating` (String!): The IMDb rating of the TV show.
+- `origin` (String): The origin or country of the TV show.
+
+### Output:
+
+#### The output is of type CommonOutput.
+
+#### CommonOutput contains the following fields:
+
+- `message` (String): A message indicating the status of the operation.
+- `status` (Boolean): Indicates whether the operation was successful (true) or not (false).
+
+### Authorization:
+
+- The user must be authenticated to access this mutation.
+- If the user is not authenticated, the mutation will return an error message indicating "Not Authorized".
 
 <hr>
 
@@ -207,5 +400,5 @@ An admin has all privileges including create, delete and update movie or tvshow 
 - `id` (String): The ID of the user.
 - `first_name` (String): The first name of the user.
 - `last_name` (String): The last name of the user.
-- `role` (String): The role of the user.
+- `role` (String): The role of the user (Auto generated by routes).
 - `email` (String): The email of the user.
