@@ -1,5 +1,7 @@
 ## Project Name: SS Backend
 
+# Fully Functional and Flexible Production Ready Backend With JWT Cookie Based Authentication
+
 ### Prerequisites
 
 - Node.js (v18.16.0 LTS) should be installed on your system. You can download it from [here](https://nodejs.org).
