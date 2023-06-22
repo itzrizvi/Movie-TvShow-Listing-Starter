@@ -8,10 +8,11 @@
 
 #### MongoDB
 
-- The project uses MongoDB Cloud as a database. No need to integrate any DB Credentials, but you have trouble to get connected to my cloud you can always use your MongoDB database, to do that you can follow these steps
-  -- Create a database on MongoDB which will have three collections `movies`, `tvshows`, and `users`
-  -- Go to this file `src/db/config/config.json`
-  -- Change the MongoDB URL on development JSON object with ID and Password.
+- The project uses MongoDB Cloud as a database. No need to integrate any DB Credentials, but you have trouble to get connected to my cloud you can always use your MongoDB database, to do that you can follow these steps:
+
+  1. Create a database on MongoDB which will have three collections `movies`, `tvshows`, and `users`
+  2. Go to this file `src/db/config/config.json`
+  3. Change the MongoDB URL on development JSON object with ID and Password.
 
 ### Getting Started
 
