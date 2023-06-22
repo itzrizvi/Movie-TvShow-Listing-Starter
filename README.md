@@ -1,6 +1,6 @@
-### Project Name: SS Backend
+## Project Name: SS Backend
 
-## Getting Started
+### Getting Started
 
 To get you started you can simply clone the repository:
 
