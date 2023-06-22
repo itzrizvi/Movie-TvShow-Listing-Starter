@@ -671,9 +671,9 @@ mutation createTVShow($data:CreateTVShowInput){
 
 <hr>
 
-#### I have made the backend secured with 3 layers of authorization checking from data payload to helper/service functions for private or authorized routes/API's to prevent an unauthorized injection.
+#### 1. I have made the backend secured with 3 layers of authorization checking from data payload to helper/service functions for private or authorized routes/API's to prevent an unauthorized injection.
 
-### Made a permission checker function and also included middlewares to extract users data.
+#### 2. Made a permission checker function and also included middlewares to extract users data.
 
 <hr>
 
