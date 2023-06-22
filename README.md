@@ -32,11 +32,11 @@
 
 <hr>
 
-### Main Two Global API
+### Main Three API's
 
-### Movie and TV Show List API
+### GET List and Single Item API of Movie and TV Show
 
-### How the API Works
+### How the GET API Works
 
 This API provides two main functionalities: retrieving a list of items and retrieving a single item.
 
@@ -76,3 +76,49 @@ This API provides two main functionalities: retrieving a list of items and retri
 - `status` (Boolean): A value indicating the success or failure of the operation.
 - `movie` (Movie object): The retrieved movie, if found.
 - `tvShow` (TVShow object): The retrieved TV show, if found.
+
+### How the POST API Works:
+
+- The API provides a mutation called `createMovie`.
+- This mutation is used to create a new movie.
+- The mutation expects a `CreateMovieInput` object as input, containing various details of the movie.
+- Upon receiving the input, the API creates a new movie using the provided data.
+- If the movie is created successfully, the API returns a success message.
+- If there is an error during the creation process, the API returns an error message.
+
+### Mutation Parameters and Types:
+
+#### The mutation `createMovie` has a single parameter:
+
+- data (Object of type CreateMovieInput): Contains the details of the movie to be created.
+
+#### The `CreateMovieInput` type has the following required fields:
+
+- `title` (String)
+- `releaseDate` (String)
+- `runtime` (String)
+- `actors` (Array of Strings)
+- `actresses` (Array of Strings)
+- `producers` (Array of Strings)
+- `genres` (Array of Strings)
+- `directors` (Array of Strings)
+- `productionTeam` (Array of Strings)
+- `sponsors` (Array of Strings)
+- `cameraAndItTeam` (Array of Strings)
+- `visualEffectsTeam` (Array of Strings)
+- `artTeam` (Array of Strings)
+- `writers` (Array of Strings)
+- `musicTeam` (Array of Strings)
+- `locationDepartment` (Array of Strings)
+- `costumeDepartment` (Array of Strings)
+- `imdbRating` (String)
+- `origin` (String)
+
+### Output:
+
+### The output of the createMovie mutation is of type `CommonOutput`.
+
+#### The CommonOutput type has the following fields:
+
+- `message` (String): A message indicating the status of the operation.
+- `status` (Boolean): A value indicating the success or failure of the operation.
