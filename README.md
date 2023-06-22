@@ -81,6 +81,8 @@ This API provides two main functionalities: retrieving a list of items and retri
 
 #### GET LIST
 
+#### Params
+
 ```
 {
     "query":{
@@ -89,6 +91,8 @@ This API provides two main functionalities: retrieving a list of items and retri
     }
 }
 ```
+
+#### Query
 
 ```
 query getItemList($query:GetItemListInput){
@@ -159,6 +163,8 @@ query getItemList($query:GetItemListInput){
 
 #### GET Single
 
+#### Params
+
 ```
 {
     "query":{
@@ -166,6 +172,8 @@ query getItemList($query:GetItemListInput){
     }
 }
 ```
+
+#### Query
 
 ```
 query getSingleItem($query:GetSingleItemInput){
@@ -274,6 +282,46 @@ query getSingleItem($query:GetSingleItemInput){
 - `message` (String): A message indicating the status of the operation.
 - `status` (Boolean): A value indicating the success or failure of the operation.
 
+### Example
+
+#### Payload
+
+```
+{
+    "data":{
+        "title": "The Conundrum",
+        "releaseDate": "2024-05-30",
+        "runtime": "112 minutes",
+        "actors": ["Oliver Johnson", "Sophia Davis"],
+        "actresses": ["Emily Thompson"],
+        "producers": ["John Smith", "Emma Wilson"],
+        "genres": ["Mystery", "Drama"],
+        "directors": ["David Brown"],
+        "productionTeam": ["Rachel Adams", "Thomas Lee"],
+        "cameraAndItTeam": ["Daniel Miller", "Jessica Anderson"],
+        "visualEffectsTeam": ["Robert Carter"],
+        "artTeam": ["Olivia Wilson", "Daniel Thompson"],
+        "writers": ["Sarah Johnson"],
+        "musicTeam": ["Andrew Carter", "Grace Wilson"],
+        "locationDepartment": ["Michael Smith"],
+        "costumeDepartment": ["Ava Davis"],
+        "imdbRating": "8.0",
+        "origin": "United States"
+    }
+}
+```
+
+#### Mutation
+
+```
+mutation createMovie($data:CreateMovieInput){
+  createMovie(data:$data){
+    message
+    status
+  }
+}
+```
+
 ### How the Create TV Show POST API Works:
 
 #### Description:
@@ -315,6 +363,90 @@ query getSingleItem($query:GetSingleItemInput){
 
 - The user must be authenticated to access this mutation.
 - If the user is not authenticated, the mutation will return an error message indicating "Not Authorized".
+
+### Example
+
+#### Payload
+
+```
+{
+    "data":{
+        "title": "Breaking Bad",
+        "seasons": [
+            {
+            "season": "1",
+            "releaseDate": "2008-01-20",
+            "totalRuntime": "8 hours",
+            "episodes": [
+                {
+                "episode": "1",
+                "title": "Pilot",
+                "runtime": "58 minutes"
+                },
+                {
+                "episode": "2",
+                "title": "Cat's in the Bag...",
+                "runtime": "48 minutes"
+                },
+                {
+                "episode": "3",
+                "title": "And the Bag's in the River",
+                "runtime": "48 minutes"
+                }
+            ]
+            },
+            {
+            "season": "2",
+            "releaseDate": "2009-03-08",
+            "totalRuntime": "10 hours",
+            "episodes": [
+                {
+                "episode": "1",
+                "title": "Seven Thirty-Seven",
+                "runtime": "48 minutes"
+                },
+                {
+                "episode": "2",
+                "title": "Grilled",
+                "runtime": "48 minutes"
+                },
+                {
+                "episode": "3",
+                "title": "Bit by a Dead Bee",
+                "runtime": "47 minutes"
+                }
+            ]
+            }
+        ],
+        "actors": ["Bryan Cranston", "Aaron Paul"],
+        "actresses": ["Skyler", "Marrie"],
+        "producers": ["Vince Gilligan", "Mark Johnson"],
+        "genres": ["Crime", "Drama", "Thriller"],
+        "directors": ["Vince Gilligan", "Michelle MacLaren"],
+        "productionTeam": ["Peter Gould", "Melissa Bernstein"],
+        "cameraAndItTeam": ["Michael Slovis", "Arthur Albert"],
+        "visualEffectsTeam": ["William Powloski", "Gregory Nicotero"],
+        "artTeam": ["Mark Freeborn", "Robb Wilson King"],
+        "sponsors": [],
+        "writers": ["Vince Gilligan", "Sam Catlin"],
+        "musicTeam": ["Dave Porter"],
+        "costumeDepartment": ["Kathleen Detoro"],
+        "imdbRating": "9.5",
+        "origin": "United States"
+    }
+}
+```
+
+#### Mutation
+
+```
+mutation createTVShow($data:CreateTVShowInput){
+  createTVShow(data:$data){
+    message
+    status
+  }
+}
+```
 
 <hr>
 
