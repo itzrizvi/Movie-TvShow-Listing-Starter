@@ -92,10 +92,10 @@ PASS: A12345678
 ```
 {
   "data":{
-  	"first_name":"Sayburg",
-    "last_name": "Solution",
-    "email":"sayburgh@gmail.com",
-    "password":"A12345678"
+        "first_name":"Sayburg",
+        "last_name": "Solution",
+        "email":"sayburgh@gmail.com",
+        "password":"A12345678"
 	}
 }
 ```
@@ -196,10 +196,10 @@ PASS: A12345678
 ```
 {
   "data":{
-  	"first_name":"Shahriar",
-    "last_name": "Rizvi User",
-    "email":"shahriar.rizvi03@gmail.com",
-    "password":"A12345678"
+        "first_name":"Shahriar",
+        "last_name": "Rizvi User",
+        "email":"shahriar.rizvi03@gmail.com",
+        "password":"A12345678"
 	}
 }
 ```
