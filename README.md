@@ -6,6 +6,8 @@
 
 #### JavaScript, Node JS, GraphQL, MongoDB, ORM (Mongoose), Apollo Server, Apollo Express, JWT etc.
 
+#### Followed the standard data structure from different type of website like Netflix, MLWBD etc about how they organize the data according to difference media like Movies and TV Shows.
+
 ### Prerequisites
 
 - Node.js (v18.16.0 LTS) should be installed on your system. You can download it from [here](https://nodejs.org).
