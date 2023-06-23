@@ -1,6 +1,0 @@
-{
-  "development": {
-    "url": "mongodb+srv://shahriarmework:mKmldYCqrgMPepai@cluster0.8sqmb9i.mongodb.net/ssbackendtask",
-    "dialect": "mongodb"
-  }
-}
