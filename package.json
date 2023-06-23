@@ -1,6 +1,9 @@
 {
   "name": "ss-backend-task-shahriar-rizvi",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=18.16.0"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -30,5 +33,8 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.3.0",
     "slugify": "^1.6.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
