@@ -4,7 +4,8 @@ const { basename } = require("path");
 const path = require("path");
 const baseName = basename(__filename);
 const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/config/config.json")[env];
+// const config = require(__dirname + "/config/config.json")[env];
+const config = require(path.join(__dirname, "config", "config.json"))[env];
 const db = {};
 
 // Function to check MongoDB connection status
