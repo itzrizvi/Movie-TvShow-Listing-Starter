@@ -6,6 +6,7 @@ const baseName = basename(__filename);
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/config/config.json")[env];
 const db = {};
+console.log(config);
 const url = config.url;
 
 // Function to check MongoDB connection status
