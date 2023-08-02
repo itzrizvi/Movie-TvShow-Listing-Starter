@@ -1,4 +1,4 @@
-## Project Name: SS Backend
+## Project Name: TV and Movie Listing API's
 
 #### Fully Functional and Flexible Production Ready Backend With JWT Cookie Based Authentication
 
